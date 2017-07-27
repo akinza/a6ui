@@ -2,6 +2,11 @@
   "name": "a6ui",
   "private": true,
   "dependencies": {
-    "jquery": "~1.11.1"
+    "jquery": "~1.11.1",
+    "cropper": "~2.3.4",
+    "bootstrap": "~3.3.7"
+  },
+  "devDependencies": {
+    "underscore": "~1.8.3"
   }
 }
