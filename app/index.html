@@ -1,55 +1,124 @@
 <!doctype html>
 <html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <title>a6ui</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
 
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <!--[if lt IE 10]>
+<head>
+  <meta charset="utf-8">
+  <title>a6ui</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/cropper/dist/cropper.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.css" />
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+  <style>
+    .container {
+      max-width: 640px;
+      margin: 20px auto;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .cropper-view-box,
+    .cropper-face {
+      /* border-radius: 50%; */
+    }
+  </style>
+</head>
+
+<body>
+  <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
-    <div class="hero-unit">
-      <h1>'Allo, 'Allo!</h1>
-      <p>You now have</p>
-      <ul>
-      <li>HTML5 Boilerplate</li>
-
-
-      </ul>
+  <div class="container">
+    <h1>Crop image</h1>
+    <h3>Image</h3>
+    <div>
+      <img id="image" src="images/taj.jpg" alt="Picture">
     </div>
+    <h3>Result</h3>
+    <p>
+      <button type="button" id="button">Crop</button>
+    </p>
+    <div id="result"></div>
+  </div>
 
+  
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/cropper/dist/cropper.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.js"></script>
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+    (function (b, o, i, l, e, r) {
+      b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+        function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
+      e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+      e.src = '//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e, r)
+    }(window, document, 'script', 'ga'));
+    ga('create', 'UA-XXXXX-X'); ga('send', 'pageview');
+  </script>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+  <!-- build:js({app,.tmp}) scripts/main.js -->
+  <!-- <script src="scripts/main.js"></script> -->
+  <!-- endbuild -->
 
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+  
+  <script>
+    (function () {
+
+      window.addEventListener('DOMContentLoaded', function () {
+        var image = document.getElementById('image');
+        var button = document.getElementById('button');
+        var result = document.getElementById('result');
+        var croppable = false;
+        var cropper = new Cropper(image, {
+          // aspectRatio: 1,
+          // viewMode: 1,
+          ready: function () {
+            croppable = true;
+          }
+        });
+
+        button.onclick = function () {
+          var croppedCanvas;
+          var roundedCanvas;
+          var croppedImage;
+
+          if (!croppable) {
+            return;
+          }
+
+          // Crop
+          croppedCanvas = cropper.getCroppedCanvas();
+
+          // Show
+          croppedImage = document.createElement('img');
+          croppedImage.src = croppedCanvas.toDataURL();
+          result.innerHTML = '';
+          result.appendChild(croppedImage);
+        };
+
+      });
+
+    })();
+  </script>
+
 </body>
+
 </html>
